@@ -1,0 +1,22 @@
+[
+ {
+   "BookID": 1,
+   "CunstomerName": "Rumal"
+ },
+ {
+   "BookID": 1,
+   "CunstomerName": "Panjabi"
+ },
+ {
+   "BookID": 3,
+   "CunstomerName": "Genji"
+ },
+ {
+   "BookID": 4,
+   "CunstomerName": "Pant"
+ },
+ {
+   "BookID": 6,
+   "CunstomerName": "Orna"
+ }
+]

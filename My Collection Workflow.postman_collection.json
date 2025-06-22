@@ -1,0 +1,284 @@
+{
+	"info": {
+		"_postman_id": "faa32be5-4c75-4847-9854-fe781212f3b7",
+		"name": "My Collection Workflow",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "45885227"
+	},
+	"item": [
+		{
+			"name": "My Folder",
+			"item": [
+				{
+					"name": "Post Req",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is created\", ()=> {\r",
+									"    pm.response.to.have.status(\"Created\");\r",
+									"});"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n\t\t\t\t\"name\":\"Alpa\",\r\n\t\t\t\t\"location\":\"USA\",\r\n\t\t\t\t\"phone\":\"01739817425\",\r\n\t\t\t\t\"course\":[\"C++\",\"Python\"]\r\n\t\t\t}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{var_collection}}/students",
+							"host": [
+								"{{var_collection}}"
+							],
+							"path": [
+								"students"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Req",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const jsonData = pm.response.json();\r",
+									"pm.test(\"Test datatype of the response\", ()=>{\r",
+									"pm.expect(jsonData).to.be.an(\"object\");\r",
+									"pm.expect(jsonData.id).to.be.a(\"string\");\r",
+									"pm.expect(jsonData.name).to.eql(\"Jhon\");\r",
+									"pm.expect(jsonData.course[1]).to.eql(\"selenium\");\r",
+									"});\r",
+									"pm.test(\"Test particular value of an array\", ()=>{\r",
+									"pm.expect(jsonData.course).to.include(\"java\");\r",
+									"pm.expect(jsonData.course).to.have.members([\"selenium\",\"java\"]);\r",
+									"});\r",
+									"var schema = {\r",
+									"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+									"  \"type\": \"object\",\r",
+									"  \"properties\": {\r",
+									"    \"id\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"name\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"location\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"phone\": {\r",
+									"      \"type\": \"string\"\r",
+									"    },\r",
+									"    \"course\": {\r",
+									"      \"type\": \"array\",\r",
+									"      \"items\": [\r",
+									"        {\r",
+									"          \"type\": \"string\"\r",
+									"        },\r",
+									"        {\r",
+									"          \"type\": \"string\"\r",
+									"        }\r",
+									"      ]\r",
+									"    }\r",
+									"  },\r",
+									"  \"required\": [\r",
+									"    \"id\",\r",
+									"    \"name\",\r",
+									"    \"location\",\r",
+									"    \"phone\",\r",
+									"    \"course\"\r",
+									"  ]\r",
+									"};\r",
+									"pm.test(\"Json schema is valid\", ()=>{\r",
+									"pm.expect(tv4.validate(jsonData, schema)).to.be.true;\r",
+									"});\r",
+									"console.log(\"this is post-request console of get\");\r",
+									"console.log(pm.globals.get(\"var_global1\"));\r",
+									"console.log(pm.environment.get(\"var_env\"));\r",
+									"console.log(pm.collectionVariables.get(\"var_collection1\"));\r",
+									"//unsetting variables created in pre-req so that they don't show in variable list after getting response\r",
+									"pm.globals.unset(\"var_global1\");\r",
+									"pm.environment.unset(\"var_env\");\r",
+									"pm.collectionVariables.unset(\"var_collection1\");\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"console.log(\"this is pre-request console of get\");\r",
+									"//local variable must created inside pre-request script\r",
+									"pm.variables.set(\"var_local\",\"http://localhost:3000\");\r",
+									"pm.globals.set(\"var_global1\",\"1\");//creating global variable\r",
+									"pm.environment.set(\"var_env\",\"3\");//creating environment variable\r",
+									"pm.collectionVariables.set(\"var_collection1\",\"2\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{var_global}}/students/{{var_global1}}",
+							"host": [
+								"{{var_global}}"
+							],
+							"path": [
+								"students",
+								"{{var_global1}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "put Req",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lima\",\r\n    \"location\":\"Bangladesh\",\r\n    \"phone\": \"987654321\",\r\n    \"course\": [\r\n        \"python\",\r\n        \"java\"\r\n      ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{var_qa_env}}/students/3",
+							"host": [
+								"{{var_qa_env}}"
+							],
+							"path": [
+								"students",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Req",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									"pm.variables.set(\"var_local\",\"http://localhost:3000\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Lima\",\r\n    \"location\":\"Bangladesh\",\r\n    \"phone\": \"987654321\",\r\n    \"course\": [\r\n        \"python\",\r\n        \"java\"\r\n      ]\r\n}"
+						},
+						"url": {
+							"raw": "{{var_local}}/students/5",
+							"host": [
+								"{{var_local}}"
+							],
+							"path": [
+								"students",
+								"5"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"console.log(\"this is pre-request console of folder\");"
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"packages": {},
+						"exec": [
+							"console.log(\"this is post-response console of folder\");"
+						]
+					}
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"console.log(\"this is pre-request console of collection\");"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					"console.log(\"this is post-request console of collection\");"
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "var_collection",
+			"value": "http://localhost:3000",
+			"type": "string"
+		}
+	]
+}
